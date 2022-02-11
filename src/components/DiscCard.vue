@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name:'Disc Card',
+    name:'DiscCard',
     props:['title','poster','author','year'],
 }
 </script>
