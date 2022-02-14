@@ -1,8 +1,8 @@
 <template>
   <div>
     <Loader :is-loading="isLoading" v-if="isLoading"/>
-    <Header />
-    <ListDiscs :list-discs = "listDiscs"/>
+    <Header @value-select = "getSelected" :genres="genres" />
+    <ListDiscs :list-discs = "listDiscsFiltered"/>
   </div>
 </template>
 
@@ -25,7 +25,10 @@ export default {
     return{
       uriCall:'https://flynn.boolean.careers/exercises/api/array/music',
       listDiscs:[],
-      isLoading:false
+      listDiscsFiltered:[],
+      isLoading:false,
+      selected:'',
+      genres:[]
     }
   },
   methods:
@@ -35,8 +38,25 @@ export default {
           axios.get(uriCall).then(res =>{
 
             this.listDiscs = res.data.response;
+            this.listDiscsFiltered = res.data.response;
             this.isLoading = false;
+
+            this.listDiscs.forEach(disc =>{
+
+            if(!this.genres.includes(disc.genre)) this.genres.push(disc.genre)
+
+            })
+
+            
           });
+      },
+      getSelected(value)
+      {
+        this.selected = value;
+
+        if(value)
+        this.listDiscsFiltered = this.listDiscs.filter(disc => disc.genre.toLowerCase() === value)
+       
       }
   },
   mounted()

@@ -1,7 +1,7 @@
 <template>
     <header class="d-flex justify-content-around align-items-center">
         <img src="../assets/img/logo.png" alt="Logo Spotify" class="img-fluid">
-        <Select />
+        <Select @on-selected ="getSelectedValue" :genres="genres" />
     </header>
 </template>
 <script>
@@ -9,10 +9,24 @@
 import Select from './Select.vue'
 
 export default {
-    name: 'App',
-  components: {
-    Select,
+    name: 'Header',
+    components: {
+        Select,
+    },
+    props:['genres'],
+  Data()
+  {
+      return{
+          selected:'',
+      }
   },
+  methods:
+  {
+      getSelectedValue(value)
+      {
+           this.$emit('value-select',value); 
+      } 
+  }
 }
 </script>
 

@@ -1,11 +1,9 @@
 <template>
     <div>
-        <select class="form-select" @change="getSelected($event)" >
+        <select class="form-select" v-model="selected" @change="$emit('on-selected',selected)">
             <option value="" selected>Seleziona il Genere</option>
-            <option value="rock">Rock</option>
-            <option value="pop">Pop</option>
-            <option value="jazz">Jazz</option>
-            <option value="metal">Metal</option>
+            <option :value="genre.toLowerCase()" v-for="(genre,index) in genres" :key="index" >{{genre}}</option>
+            
         </select>
     </div>
 </template>
@@ -13,25 +11,16 @@
 
 export default {
     name:'Select',
-    
     data()
     {
         return{
             selected:'',
         }
     },
+    props:['genres'],
     methods:
     {
-        getSelected(e) 
-        {
-            const value = e.target.value
-            if(value)
-            {
-              this.selected = value;
-              console.log(e.target.value);
-            }
-           
-        },
+        
     }
 }
 </script>
